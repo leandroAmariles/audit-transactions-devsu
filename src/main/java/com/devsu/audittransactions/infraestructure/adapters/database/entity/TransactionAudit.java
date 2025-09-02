@@ -4,16 +4,17 @@ package com.devsu.audittransactions.infraestructure.adapters.database.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "TRANSACTION_AUDIT")
 public class TransactionAudit {
 
