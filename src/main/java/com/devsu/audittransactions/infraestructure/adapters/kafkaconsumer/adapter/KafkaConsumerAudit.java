@@ -19,15 +19,17 @@ public class KafkaConsumerAudit implements IKafkaConsumerAudit {
 
     private final ITransactionAuditAdapter transactionAuditAdapter;
 
+    private final ObjectMapper objectMapper;
+
     @Override
     @KafkaListener(topics = "transaction-audit-updater", groupId = "query-data-management-group")
     public void auditTransactionListener(ConsumerRecord<String, String> record) {
         log.info("Received record: {} {}", record.key(), record.value());
         TransactionAudit transactionAudit = null;
         try {
-            transactionAudit = new ObjectMapper().readValue(record.value(), TransactionAudit.class);
+            transactionAudit = objectMapper.readValue(record.value(), TransactionAudit.class);
         }catch (Exception e){
-            log.error("Error while reading transaction record: {} {}", record.key(), record.value());
+            log.error("Error while reading transaction record: {} {} {}", record.key(), record.value(), e.getMessage());
         }
         transactionAuditAdapter.saveTransactionAudit(transactionAudit);
     }

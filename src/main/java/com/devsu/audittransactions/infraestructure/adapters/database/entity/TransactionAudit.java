@@ -1,9 +1,7 @@
 package com.devsu.audittransactions.infraestructure.adapters.database.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,6 +17,7 @@ import java.time.LocalDateTime;
 public class TransactionAudit {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTransaction;
 
     private LocalDateTime createDate;
@@ -27,11 +26,11 @@ public class TransactionAudit {
 
     private String accountNumber;
 
-    private String accountType;
+    private String transactionType;
 
     private double initialBalance;
 
-    private boolean state;
+    private boolean status;
 
     private double transactionAmount;
 

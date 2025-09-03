@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.stereotype.Service;
-
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +20,10 @@ public class ReportService implements IReportService {
     @Override
     public byte[] generateReport(List<TransactionAudit> transactionAudits) throws JRException {
 
-        InputStream reportStream = getClass().getResourceAsStream("/reports/transaction_audit.jrxml");
+        InputStream reportStream = getClass().getResourceAsStream("/report/Tranactions-report.jrxml");
 
         JasperReport jasperReport = null;
+
 
         JRBeanCollectionDataSource dataSource = null;
 

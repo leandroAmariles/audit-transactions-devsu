@@ -20,7 +20,8 @@ public class TransactionAuditService implements ITransactionsAuditService {
     private final IReportService iReportService;
 
     @Override
-    public byte[] generateExtract(ExtractRequest extractRequest) {
+    public byte[] generateExtract(String startDate, String endDate, String clientName) {
+        ExtractRequest extractRequest = new ExtractRequest(clientName, startDate, endDate);
         List<TransactionAudit> transactionAudits = iTransactionAuditAdapter.getTransactionAudits(extractRequest);
         byte[] result = null;
         try {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ITransactionsAuditService {
 
-    byte[] generateExtract(ExtractRequest extractRequest);
+    byte[] generateExtract(String startDate, String endDate, String clientName);
 
 
 

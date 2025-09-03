@@ -7,7 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,9 +16,13 @@ public class AuditTransactionController {
 
     private final ITransactionsAuditService auditTransactionService;
 
-    @GetMapping("/generate-extract")
-    ResponseEntity<byte[]> generateExtractReport(@RequestBody ExtractRequest extractRequest) {
-        byte[] report = auditTransactionService.generateExtract(extractRequest);
+    @GetMapping("/reportes")
+    ResponseEntity<byte[]> generateExtractReport(
+            @RequestParam("fechaInicio") String startDate,
+            @RequestParam("fechaFin") String endDate,
+            @RequestParam("nombreCliente") String clientName
+    ) {
+        byte[] report = auditTransactionService.generateExtract(startDate, endDate, clientName);
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=extract_transactions.pdf");
         return ResponseEntity.ok()
