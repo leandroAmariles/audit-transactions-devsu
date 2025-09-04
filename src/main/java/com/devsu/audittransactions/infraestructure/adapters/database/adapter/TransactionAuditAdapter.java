@@ -46,7 +46,7 @@ public class TransactionAuditAdapter implements ITransactionAuditAdapter {
 
             ExampleMatcher exampleMatcher = ExampleMatcher.matching()
                     .withIgnoreCase("clientName")
-                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+                    .withStringMatcher(ExampleMatcher.StringMatcher.EXACT);
 
             Example<TransactionAudit> example = Example.of(transactionAudit, exampleMatcher);
 
@@ -60,6 +60,12 @@ public class TransactionAuditAdapter implements ITransactionAuditAdapter {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             return (Specification<TransactionAudit>) (root, query, builder) -> {
                 final List<Predicate> predicates = new ArrayList<>();
+
+                String clientName = transactionAudit.getClientName()!=null?transactionAudit.getClientName():null;
+
+                if (clientName != null && !clientName.isBlank()) {
+                    predicates.add(builder.equal(builder.lower(root.get("clientName")), clientName.toLowerCase()));
+                }
                 try {
                     LocalDateTime start = LocalDateTime.parse(startDate, formatter);
                     LocalDateTime end = LocalDateTime.parse(endDate, formatter);
